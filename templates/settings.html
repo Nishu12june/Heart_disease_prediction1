@@ -1,1 +1,225 @@
+{% extends "base.html" %}
 
+{% block title %}Settings{% endblock %}
+{% block page_title %}Application Settings{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-dark text-white">
+
+                <h4>
+
+                    <i class="fa-solid fa-gear"></i>
+
+                    Settings
+
+                </h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <form action="{{ url_for('save_settings_route') }}" method="POST">
+
+                    <!-- Theme -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+
+                            Theme
+
+                        </label>
+
+                        <select
+                            class="form-select"
+                            name="theme">
+
+                            <option value="light"
+                            {% if settings.theme=="light" %}selected{% endif %}>
+
+                                Light
+
+                            </option>
+
+                            <option value="dark"
+                            {% if settings.theme=="dark" %}selected{% endif %}>
+
+                                Dark
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Notifications -->
+
+                    <div class="form-check form-switch mb-4">
+
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="notifications"
+                            name="notifications"
+                            {% if settings.notifications %}checked{% endif %}>
+
+                        <label
+                            class="form-check-label"
+                            for="notifications">
+
+                            Enable Notifications
+
+                        </label>
+
+                    </div>
+
+                    <hr>
+
+                    <button
+                        type="submit"
+                        class="btn btn-success">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Save Settings
+
+                    </button>
+
+                    <button
+                        type="reset"
+                        class="btn btn-secondary">
+
+                        Reset
+
+                    </button>
+
+                    <a
+                        href="{{ url_for('dashboard') }}"
+                        class="btn btn-danger">
+
+                        Back
+
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- Information Card -->
+
+        <div class="card shadow mt-4">
+
+            <div class="card-header bg-primary text-white">
+
+                <h5>
+
+                    About This System
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-bordered">
+
+                    <tr>
+
+                        <th width="40%">
+
+                            Project
+
+                        </th>
+
+                        <td>
+
+                            Heart Disease Prediction System
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            Framework
+
+                        </th>
+
+                        <td>
+
+                            Flask
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            Machine Learning
+
+                        </th>
+
+                        <td>
+
+                            Scikit-learn
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            Report
+
+                        </th>
+
+                        <td>
+
+                            PDF Generator
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            Charts
+
+                        </th>
+
+                        <td>
+
+                            Matplotlib
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
