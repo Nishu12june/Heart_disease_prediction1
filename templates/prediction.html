@@ -1,105 +1,129 @@
-<div class="row">
+{% extends "base.html" %}
 
-    <!-- Prediction Form -->
-    <div class="col-lg-8">
+{% block title %}Heart Disease Prediction{% endblock %}
+{% block page_title %}Heart Disease Prediction{% endblock %}
 
-        <!-- Your existing form goes here -->
+{% block content %}
 
+<div class="container-fluid">
+
+    <!-- Instructions -->
+    <div class="alert alert-info shadow-sm mb-4">
+        <h5>
+            <i class="fa-solid fa-circle-info"></i>
+            Prediction Instructions
+        </h5>
+
+        <ul class="mb-0">
+            <li>Select a registered patient.</li>
+            <li>Enter the latest medical test values.</li>
+            <li>Use the examples shown in each input field.</li>
+            <li>Click <b>Predict</b> to generate the result.</li>
+        </ul>
     </div>
 
-    <!-- Notes -->
-    <div class="col-lg-4">
+    <div class="card shadow">
 
-        <div class="card shadow border-warning">
-
-            <div class="card-header bg-warning text-dark">
-                <h5>
-                    <i class="fa-solid fa-circle-info"></i>
-                    Notes / Input Guide
-                </h5>
-            </div>
-
-            <div class="card-body">
-
-                <ul class="small">
-
-                    <li>
-                        <b>Select Patient:</b>
-                        Choose the registered patient.
-                    </li>
-
-                    <li>
-                        <b>Chest Pain (CP)</b><br>
-                        0 = Typical Angina<br>
-                        1 = Atypical Angina<br>
-                        2 = Non-anginal Pain<br>
-                        3 = Asymptomatic
-                    </li>
-
-                    <li>
-                        <b>Resting Blood Pressure</b><br>
-                        Normal: 90–120 mmHg
-                    </li>
-
-                    <li>
-                        <b>Cholesterol</b><br>
-                        Normal: Below 200 mg/dL
-                    </li>
-
-                    <li>
-                        <b>Fasting Blood Sugar</b><br>
-                        Less than 120 = 0<br>
-                        Greater than 120 = 1
-                    </li>
-
-                    <li>
-                        <b>Rest ECG</b><br>
-                        0 = Normal<br>
-                        1 = ST-T Abnormality<br>
-                        2 = Left Ventricular Hypertrophy
-                    </li>
-
-                    <li>
-                        <b>Maximum Heart Rate</b><br>
-                        Usually between 60–202 bpm
-                    </li>
-
-                    <li>
-                        <b>Exercise Angina</b><br>
-                        No = 0<br>
-                        Yes = 1
-                    </li>
-
-                    <li>
-                        <b>Old Peak</b><br>
-                        ST depression during exercise.
-                    </li>
-
-                    <li>
-                        <b>Slope</b><br>
-                        0 = Upsloping<br>
-                        1 = Flat<br>
-                        2 = Downsloping
-                    </li>
-
-                    <li>
-                        <b>Major Vessels (CA)</b><br>
-                        Number of vessels (0–3)
-                    </li>
-
-                    <li>
-                        <b>Thal</b><br>
-                        1 = Normal<br>
-                        2 = Fixed Defect<br>
-                        3 = Reversible Defect
-                    </li>
-
-                </ul>
-
-            </div>
-
+        <div class="card-header bg-danger text-white">
+            <h4>
+                <i class="fa-solid fa-heart-pulse"></i>
+                Heart Disease Prediction
+            </h4>
         </div>
 
-    </div>
+        <div class="card-body">
 
-</div>
+            <form action="{{ url_for('predict') }}" method="POST">
+
+                <!-- Patient Selection -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Select Patient
+                    </label>
+
+                    <select
+                        class="form-select"
+                        name="patient_id"
+                        required>
+
+                        <option value="">
+                            -- Select Registered Patient --
+                        </option>
+
+                        {% for patient in patients %}
+
+                        <option value="{{ patient.id }}">
+
+                            {{ patient.id }} - {{ patient.name }}
+                            ({{ patient.age }} Years)
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <hr>
+
+                <div class="row">
+
+                    <!-- Chest Pain -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Chest Pain Type
+
+                        </label>
+
+                        <select
+                            class="form-select"
+                            name="cp"
+                            required>
+
+                            <option value="">
+                                -- Select Chest Pain Type --
+                            </option>
+
+                            <option value="0">
+                                Typical Angina
+                            </option>
+
+                            <option value="1">
+                                Atypical Angina
+                            </option>
+
+                            <option value="2">
+                                Non-anginal Pain
+                            </option>
+
+                            <option value="3">
+                                Asymptomatic
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Blood Pressure -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Resting Blood Pressure
+
+                        </label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            name="trestbps"
+                            placeholder="Example: 120 mmHg"
+                            min="80"
+                            max="250"
+                            required>
+
+                    </div>
