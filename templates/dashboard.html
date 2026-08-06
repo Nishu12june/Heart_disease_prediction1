@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <!-- Total Patients -->
+    <div class="col-md-3 mb-4">
+        <div class="card shadow border-0 text-center">
+            <div class="card-body">
+                <i class="fa-solid fa-users fa-3x text-primary mb-3"></i>
+                <h2>{{ total_patients }}</h2>
+                <h5>Total Patients</h5>
+            </div>
+        </div>
+    </div>
+
+    <!-- Predictions -->
+    <div class="col-md-3 mb-4">
+        <div class="card shadow border-0 text-center">
+            <div class="card-body">
+                <i class="fa-solid fa-heart-pulse fa-3x text-success mb-3"></i>
+                <h2>{{ total_predictions }}</h2>
+                <h5>Predictions</h5>
+            </div>
+        </div>
+    </div>
+
+    <!-- High Risk -->
+    <div class="col-md-3 mb-4">
+        <div class="card shadow border-0 text-center">
+            <div class="card-body">
+                <i class="fa-solid fa-triangle-exclamation fa-3x text-danger mb-3"></i>
+                <h2>{{ high_risk }}</h2>
+                <h5>High Risk</h5>
+            </div>
+        </div>
+    </div>
+
+    <!-- Low Risk -->
+    <div class="col-md-3 mb-4">
+        <div class="card shadow border-0 text-center">
+            <div class="card-body">
+                <i class="fa-solid fa-circle-check fa-3x text-success mb-3"></i>
+                <h2>{{ low_risk }}</h2>
+                <h5>Low Risk</h5>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <!-- Welcome -->
+    <div class="col-lg-8">
+
+        <div class="card shadow border-0">
+
+            <div class="card-header bg-primary text-white">
+
+                <h4>
+                    Welcome, {{ profile.name }}
+                </h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <p class="lead">
+                    Welcome to the Heart Disease Prediction System.
+                </p>
+
+                <p>
+                    This application allows you to:
+                </p>
+
+                <ul>
+                    <li>Register new patients</li>
+                    <li>Predict heart disease risk using Machine Learning</li>
+                    <li>Generate PDF reports</li>
+                    <li>View patient analytics</li>
+                    <li>Edit and delete patient records</li>
+                </ul>
+
+                <a href="{{ url_for('registration') }}" class="btn btn-primary">
+                    Register Patient
+                </a>
+
+                <a href="{{ url_for('prediction') }}" class="btn btn-success">
+                    Predict
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Quick Links -->
+    <div class="col-lg-4">
+
+        <div class="card shadow border-0">
+
+            <div class="card-header bg-success text-white">
+
+                <h5>Quick Access</h5>
+
+            </div>
+
+            <div class="list-group list-group-flush">
+
+                <a href="{{ url_for('registration') }}" class="list-group-item">
+                    <i class="fa-solid fa-user-plus"></i>
+                    Register Patient
+                </a>
+
+                <a href="{{ url_for('prediction') }}" class="list-group-item">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                    Heart Prediction
+                </a>
+
+                <a href="{{ url_for('reports') }}" class="list-group-item">
+                    <i class="fa-solid fa-file-medical"></i>
+                    Reports
+                </a>
+
+                <a href="{{ url_for('analytics') }}" class="list-group-item">
+                    <i class="fa-solid fa-chart-column"></i>
+                    Analytics
+                </a>
+
+                <a href="{{ url_for('profile') }}" class="list-group-item">
+                    <i class="fa-solid fa-user"></i>
+                    Profile
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
