@@ -127,3 +127,248 @@
                             required>
 
                     </div>
+                                        <!-- Cholesterol -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Cholesterol
+                        </label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            name="chol"
+                            placeholder="Example: 180 mg/dL"
+                            min="100"
+                            max="700"
+                            required>
+
+                    </div>
+
+                    <!-- Fasting Blood Sugar -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Fasting Blood Sugar
+                        </label>
+
+                        <select
+                            class="form-select"
+                            name="fbs"
+                            required>
+
+                            <option value="">
+                                -- Select Blood Sugar --
+                            </option>
+
+                            <option value="0">
+                                Less than 120 mg/dL
+                            </option>
+
+                            <option value="1">
+                                120 mg/dL or Above
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Rest ECG -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Resting ECG Result
+                        </label>
+
+                        <select
+                            class="form-select"
+                            name="restecg"
+                            required>
+
+                            <option value="">
+                                -- Select ECG Result --
+                            </option>
+
+                            <option value="0">
+                                Normal
+                            </option>
+
+                            <option value="1">
+                                ST-T Wave Abnormality
+                            </option>
+
+                            <option value="2">
+                                Left Ventricular Hypertrophy
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Maximum Heart Rate -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Maximum Heart Rate
+                        </label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            name="thalach"
+                            placeholder="Example: 150 bpm"
+                            min="60"
+                            max="220"
+                            required>
+
+                    </div>
+
+                    <!-- Exercise Induced Angina -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Exercise Induced Angina
+                        </label>
+
+                        <select
+                            class="form-select"
+                            name="exang"
+                            required>
+
+                            <option value="">
+                                -- Select Option --
+                            </option>
+
+                            <option value="0">
+                                No
+                            </option>
+
+                            <option value="1">
+                                Yes
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Old Peak -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Old Peak (ST Depression)
+                        </label>
+
+                        <input
+                            type="number"
+                            step="0.1"
+                            class="form-control"
+                            name="oldpeak"
+                            placeholder="Example: 1.2"
+                            min="0"
+                            max="10"
+                            required>
+
+                    </div>
+
+                    <!-- Slope -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Slope of Peak Exercise ST Segment
+                        </label>
+
+                        <select
+                            class="form-select"
+                            name="slope"
+                            required>
+
+                            <option value="">
+                                -- Select Slope --
+                            </option>
+
+                            <option value="0">
+                                Upsloping
+                            </option>
+
+                            <option value="1">
+                                Flat
+                            </option>
+
+                            <option value="2">
+                                Downsloping
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Major Vessels -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Number of Major Vessels (CA)
+                        </label>
+
+                        <select
+                            class="form-select"
+                            name="ca"
+                            required>
+
+                            <option value="">
+                                -- Select Number --
+                            </option>
+
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Thal -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Thalassemia Result
+                        </label>
+
+                        <select
+                            class="form-select"
+                            name="thal"
+                            required>
+
+                            <option value="">
+                                -- Select Result --
+                            </option>
+
+                            <option value="1">
+                                Normal
+                            </option>
+
+                            <option value="2">
+                                Fixed Defect
+                            </option>
+
+                            <option value="3">
+                                Reversible Defect
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <button
+                    type="submit"
+                    class="btn btn-danger">
+
+                    <i class="fa-solid fa-heart-circle-check"></i>
+
+                    Predict Heart Disease
+
+                </button>
