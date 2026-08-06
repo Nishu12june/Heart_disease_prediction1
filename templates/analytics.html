@@ -1,1 +1,254 @@
+{% extends "base.html" %}
 
+{% block title %}Analytics{% endblock %}
+{% block page_title %}Analytics Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card shadow text-center border-0">
+
+            <div class="card-body">
+
+                <i class="fa-solid fa-users fa-3x text-primary mb-3"></i>
+
+                <h2>{{ total_patients }}</h2>
+
+                <h5>Total Patients</h5>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card shadow text-center border-0">
+
+            <div class="card-body">
+
+                <i class="fa-solid fa-heart-pulse fa-3x text-success mb-3"></i>
+
+                <h2>{{ total_predictions }}</h2>
+
+                <h5>Predictions</h5>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card shadow text-center border-0">
+
+            <div class="card-body">
+
+                <i class="fa-solid fa-triangle-exclamation fa-3x text-danger mb-3"></i>
+
+                <h2>{{ high_risk }}</h2>
+
+                <h5>High Risk</h5>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card shadow text-center border-0">
+
+            <div class="card-body">
+
+                <i class="fa-solid fa-circle-check fa-3x text-success mb-3"></i>
+
+                <h2>{{ low_risk }}</h2>
+
+                <h5>Low Risk</h5>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Average Probability -->
+
+<div class="card shadow mb-4">
+
+    <div class="card-body text-center">
+
+        <h4>
+
+            Average Risk Probability
+
+        </h4>
+
+        <h2 class="text-primary">
+
+            {{ average_probability }} %
+
+        </h2>
+
+    </div>
+
+</div>
+
+<!-- Charts -->
+
+<div class="row">
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-primary text-white">
+
+                Risk Distribution
+
+            </div>
+
+            <div class="card-body text-center">
+
+                <img
+                    src="{{ url_for('static', filename='charts/risk_distribution.png') }}"
+                    class="img-fluid"
+                    alt="Risk Distribution">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-success text-white">
+
+                Prediction Probability
+
+            </div>
+
+            <div class="card-body text-center">
+
+                <img
+                    src="{{ url_for('static', filename='charts/probability_chart.png') }}"
+                    class="img-fluid"
+                    alt="Probability Chart">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Patient-wise Analysis -->
+
+<div class="card shadow">
+
+    <div class="card-header bg-dark text-white">
+
+        <h5>
+
+            Patient-wise Prediction Analysis
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Name</th>
+
+                        <th>Age</th>
+
+                        <th>Gender</th>
+
+                        <th>Risk</th>
+
+                        <th>Probability</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for patient in patients %}
+
+                <tr>
+
+                    <td>{{ patient.id }}</td>
+
+                    <td>{{ patient.name }}</td>
+
+                    <td>{{ patient.age }}</td>
+
+                    <td>{{ patient.gender }}</td>
+
+                    <td>
+
+                        {% if patient.prediction.risk == "High Risk" %}
+
+                        <span class="badge bg-danger">
+
+                            {{ patient.prediction.risk }}
+
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge bg-success">
+
+                            {{ patient.prediction.risk }}
+
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        {{ patient.prediction.probability }} %
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
