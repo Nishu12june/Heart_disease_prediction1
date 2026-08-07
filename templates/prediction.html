@@ -1,374 +1,195 @@
 {% extends "base.html" %}
 
-{% block title %}Heart Disease Prediction{% endblock %}
+{% block title %}Prediction{% endblock %}
+
 {% block page_title %}Heart Disease Prediction{% endblock %}
 
 {% block content %}
 
 <div class="container-fluid">
 
-    <!-- Instructions -->
-    <div class="alert alert-info shadow-sm mb-4">
-        <h5>
-            <i class="fa-solid fa-circle-info"></i>
-            Prediction Instructions
-        </h5>
-
-        <ul class="mb-0">
-            <li>Select a registered patient.</li>
-            <li>Enter the latest medical test values.</li>
-            <li>Use the examples shown in each input field.</li>
-            <li>Click <b>Predict</b> to generate the result.</li>
-        </ul>
-    </div>
-
-    <div class="card shadow">
-
+    <!-- Page Header -->
+    <div class="card shadow mb-4">
         <div class="card-header bg-danger text-white">
-            <h4>
+            <h3>
                 <i class="fa-solid fa-heart-pulse"></i>
                 Heart Disease Prediction
-            </h4>
+            </h3>
         </div>
 
         <div class="card-body">
 
             <form action="{{ url_for('predict') }}" method="POST">
 
-                <!-- Patient Selection -->
+                <!-- Patient -->
                 <div class="mb-3">
+                    <label class="form-label">Select Patient</label>
 
-                    <label class="form-label">
-                        Select Patient
-                    </label>
-
-                    <select
-                        class="form-select"
-                        name="patient_id"
-                        required>
-
-                        <option value="">
-                            -- Select Registered Patient --
-                        </option>
+                    <select class="form-select" name="patient_id" required>
+                        <option value="">-- Select Patient --</option>
 
                         {% for patient in patients %}
-
                         <option value="{{ patient.id }}">
-
                             {{ patient.id }} - {{ patient.name }}
-                            ({{ patient.age }} Years)
-
                         </option>
-
                         {% endfor %}
 
                     </select>
-
                 </div>
-
-                <hr>
 
                 <div class="row">
 
-                    <!-- Chest Pain -->
                     <div class="col-md-6 mb-3">
-
-                        <label class="form-label">
-
-                            Chest Pain Type
-
-                        </label>
-
-                        <select
-                            class="form-select"
-                            name="cp"
-                            required>
-
-                            <option value="">
-                                -- Select Chest Pain Type --
-                            </option>
-
-                            <option value="0">
-                                Typical Angina
-                            </option>
-
-                            <option value="1">
-                                Atypical Angina
-                            </option>
-
-                            <option value="2">
-                                Non-anginal Pain
-                            </option>
-
-                            <option value="3">
-                                Asymptomatic
-                            </option>
-
+                        <label>Chest Pain Type</label>
+                        <select class="form-select" name="cp" required>
+                            <option value="0">Typical Angina</option>
+                            <option value="1">Atypical Angina</option>
+                            <option value="2">Non-anginal Pain</option>
+                            <option value="3">Asymptomatic</option>
                         </select>
-
                     </div>
 
-                    <!-- Blood Pressure -->
                     <div class="col-md-6 mb-3">
-
-                        <label class="form-label">
-
-                            Resting Blood Pressure
-
-                        </label>
-
-                        <input
-                            type="number"
-                            class="form-control"
-                            name="trestbps"
-                            placeholder="Example: 120 mmHg"
-                            min="80"
-                            max="250"
-                            required>
-
-                    </div>
-                                        <!-- Cholesterol -->
-                    <div class="col-md-6 mb-3">
-
-                        <label class="form-label">
-                            Cholesterol
-                        </label>
-
-                        <input
-                            type="number"
-                            class="form-control"
-                            name="chol"
-                            placeholder="Example: 180 mg/dL"
-                            min="100"
-                            max="700"
-                            required>
-
+                        <label>Resting Blood Pressure</label>
+                        <input type="number"
+                               class="form-control"
+                               name="trestbps"
+                               required>
                     </div>
 
-                    <!-- Fasting Blood Sugar -->
                     <div class="col-md-6 mb-3">
+                        <label>Cholesterol</label>
+                        <input type="number"
+                               class="form-control"
+                               name="chol"
+                               required>
+                    </div>
 
-                        <label class="form-label">
-                            Fasting Blood Sugar
-                        </label>
+                    <div class="col-md-6 mb-3">
+                        <label>Fasting Blood Sugar</label>
 
-                        <select
-                            class="form-select"
-                            name="fbs"
-                            required>
-
-                            <option value="">
-                                -- Select Blood Sugar --
-                            </option>
-
-                            <option value="0">
-                                Less than 120 mg/dL
-                            </option>
-
-                            <option value="1">
-                                120 mg/dL or Above
-                            </option>
-
+                        <select class="form-select" name="fbs" required>
+                            <option value="0">Less than 120</option>
+                            <option value="1">120 or Above</option>
                         </select>
-
                     </div>
 
-                    <!-- Rest ECG -->
                     <div class="col-md-6 mb-3">
+                        <label>Rest ECG</label>
 
-                        <label class="form-label">
-                            Resting ECG Result
-                        </label>
-
-                        <select
-                            class="form-select"
-                            name="restecg"
-                            required>
-
-                            <option value="">
-                                -- Select ECG Result --
-                            </option>
-
-                            <option value="0">
-                                Normal
-                            </option>
-
-                            <option value="1">
-                                ST-T Wave Abnormality
-                            </option>
-
-                            <option value="2">
-                                Left Ventricular Hypertrophy
-                            </option>
-
+                        <select class="form-select" name="restecg" required>
+                            <option value="0">Normal</option>
+                            <option value="1">Abnormal</option>
+                            <option value="2">Hypertrophy</option>
                         </select>
-
                     </div>
 
-                    <!-- Maximum Heart Rate -->
                     <div class="col-md-6 mb-3">
-
-                        <label class="form-label">
-                            Maximum Heart Rate
-                        </label>
-
-                        <input
-                            type="number"
-                            class="form-control"
-                            name="thalach"
-                            placeholder="Example: 150 bpm"
-                            min="60"
-                            max="220"
-                            required>
-
+                        <label>Maximum Heart Rate</label>
+                        <input type="number"
+                               class="form-control"
+                               name="thalach"
+                               required>
                     </div>
 
-                    <!-- Exercise Induced Angina -->
                     <div class="col-md-6 mb-3">
+                        <label>Exercise Angina</label>
 
-                        <label class="form-label">
-                            Exercise Induced Angina
-                        </label>
-
-                        <select
-                            class="form-select"
-                            name="exang"
-                            required>
-
-                            <option value="">
-                                -- Select Option --
-                            </option>
-
-                            <option value="0">
-                                No
-                            </option>
-
-                            <option value="1">
-                                Yes
-                            </option>
-
+                        <select class="form-select" name="exang" required>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
                         </select>
-
                     </div>
 
-                    <!-- Old Peak -->
                     <div class="col-md-6 mb-3">
-
-                        <label class="form-label">
-                            Old Peak (ST Depression)
-                        </label>
-
-                        <input
-                            type="number"
-                            step="0.1"
-                            class="form-control"
-                            name="oldpeak"
-                            placeholder="Example: 1.2"
-                            min="0"
-                            max="10"
-                            required>
-
+                        <label>Old Peak</label>
+                        <input type="number"
+                               step="0.1"
+                               class="form-control"
+                               name="oldpeak"
+                               required>
                     </div>
 
-                    <!-- Slope -->
                     <div class="col-md-6 mb-3">
+                        <label>Slope</label>
 
-                        <label class="form-label">
-                            Slope of Peak Exercise ST Segment
-                        </label>
-
-                        <select
-                            class="form-select"
-                            name="slope"
-                            required>
-
-                            <option value="">
-                                -- Select Slope --
-                            </option>
-
-                            <option value="0">
-                                Upsloping
-                            </option>
-
-                            <option value="1">
-                                Flat
-                            </option>
-
-                            <option value="2">
-                                Downsloping
-                            </option>
-
+                        <select class="form-select" name="slope" required>
+                            <option value="0">Upsloping</option>
+                            <option value="1">Flat</option>
+                            <option value="2">Downsloping</option>
                         </select>
-
                     </div>
 
-                    <!-- Major Vessels -->
                     <div class="col-md-6 mb-3">
+                        <label>Major Vessels</label>
 
-                        <label class="form-label">
-                            Number of Major Vessels (CA)
-                        </label>
-
-                        <select
-                            class="form-select"
-                            name="ca"
-                            required>
-
-                            <option value="">
-                                -- Select Number --
-                            </option>
-
+                        <select class="form-select" name="ca" required>
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
-
                         </select>
-
                     </div>
 
-                    <!-- Thal -->
                     <div class="col-md-6 mb-3">
+                        <label>Thal</label>
 
-                        <label class="form-label">
-                            Thalassemia Result
-                        </label>
-
-                        <select
-                            class="form-select"
-                            name="thal"
-                            required>
-
-                            <option value="">
-                                -- Select Result --
-                            </option>
-
-                            <option value="1">
-                                Normal
-                            </option>
-
-                            <option value="2">
-                                Fixed Defect
-                            </option>
-
-                            <option value="3">
-                                Reversible Defect
-                            </option>
-
+                        <select class="form-select" name="thal" required>
+                            <option value="1">Normal</option>
+                            <option value="2">Fixed Defect</option>
+                            <option value="3">Reversible Defect</option>
                         </select>
-
                     </div>
 
                 </div>
 
-                <hr>
-
-                <button
-                    type="submit"
-                    class="btn btn-danger">
-
-                    <i class="fa-solid fa-heart-circle-check"></i>
-
-                    Predict Heart Disease
-
+                <button type="submit" class="btn btn-danger">
+                    Predict
                 </button>
+
+            </form>
+
+        </div>
+    </div>
+
+    {% if prediction %}
+
+    <div class="card shadow">
+
+        <div class="card-header bg-success text-white">
+            <h4>Prediction Result</h4>
+        </div>
+
+        <div class="card-body">
+
+            <h5>
+                Patient :
+                {{ selected_patient.name }}
+            </h5>
+
+            <hr>
+
+            <p><strong>Prediction :</strong> {{ prediction }}</p>
+
+            <p><strong>Risk Probability :</strong> {{ probability }}%</p>
+
+            <p><strong>Recommendation :</strong></p>
+
+            <div class="alert alert-info">
+                {{ recommendation }}
+            </div>
+
+            <a href="{{ url_for('reports') }}"
+               class="btn btn-primary">
+                View Reports
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
