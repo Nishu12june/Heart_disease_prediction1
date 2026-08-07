@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "name": "payal",
+        "age": 45,
+        "gender": "Female",
+        "blood_group": "A+",
+        "phone": "9845667891",
+        "email": "payal@gmail.com",
+        "address": "panipat",
+        "emergency_contact": "7883256789",
+        "registered_on": "05-08-2026",
+        "prediction": {
+            "risk": "Low Risk",
+            "probability": 2.29,
+            "prediction_date": "05-08-2026",
+            "parameters": {
+                "cp": 0,
+                "trestbps": 180,
+                "chol": 190,
+                "fbs": 1,
+                "restecg": 1,
+                "thalach": 170,
+                "exang": 0,
+                "oldpeak": 0.0,
+                "slope": 0,
+                "ca": 3,
+                "thal": 2
+            }
+        }
+    },
+    {
+        "id": 2,
+        "name": "pooja",
+        "age": 50,
+        "gender": "Female",
+        "blood_group": "A+",
+        "phone": "9845667891",
+        "email": "pooja@gmail.com",
+        "address": "panipat",
+        "emergency_contact": "7883256789",
+        "registered_on": "05-08-2026",
+        "prediction": {
+            "risk": "Low Risk",
+            "probability": 2.08,
+            "prediction_date": "05-08-2026",
+            "parameters": {
+                "cp": 1,
+                "trestbps": 150,
+                "chol": 180,
+                "fbs": 0,
+                "restecg": 1,
+                "thalach": 170,
+                "exang": 0,
+                "oldpeak": 0.0,
+                "slope": 0,
+                "ca": 2,
+                "thal": 2
+            }
+        }
+    },
+    {
+        "id": 3,
+        "name": "Amit",
+        "age": 55,
+        "gender": "Male",
+        "blood_group": "A+",
+        "phone": "9876542325",
+        "email": "Amit@gmail.com",
+        "address": "Karnal",
+        "emergency_contact": "7883256789",
+        "registered_on": "05-08-2026",
+        "prediction": {
+            "risk": "High Risk",
+            "probability": 60.35,
+            "prediction_date": "05-08-2026",
+            "parameters": {
+                "cp": 2,
+                "trestbps": 160,
+                "chol": 200,
+                "fbs": 0,
+                "restecg": 1,
+                "thalach": 190,
+                "exang": 1,
+                "oldpeak": 3.0,
+                "slope": 0,
+                "ca": 2,
+                "thal": 2
+            }
+        }
+    }
+]

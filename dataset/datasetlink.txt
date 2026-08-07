@@ -1,0 +1,2 @@
+dataset link : c:\Users\DELL\Downloads\Heart_Disease_Prediction.csv
+colab link : https://colab.research.google.com/drive/1fcOrPSEniy89T92mYtzgo4uiklD5d9S9

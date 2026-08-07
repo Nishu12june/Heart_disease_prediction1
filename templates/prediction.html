@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction{% endblock %}
+
+{% block page_title %}Heart Disease Prediction{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="card shadow mb-4">
+        <div class="card-header bg-danger text-white">
+            <h3>
+                <i class="fa-solid fa-heart-pulse"></i>
+                Heart Disease Prediction
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            <form action="{{ url_for('predict') }}" method="POST">
+
+                <!-- Patient -->
+                <div class="mb-3">
+                    <label class="form-label">Select Patient</label>
+
+                    <select class="form-select" name="patient_id" required>
+                        <option value="">-- Select Patient --</option>
+
+                        {% for patient in patients %}
+                        <option value="{{ patient.id }}">
+                            {{ patient.id }} - {{ patient.name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label>Chest Pain Type</label>
+                        <select class="form-select" name="cp" required>
+                            <option value="0">Typical Angina</option>
+                            <option value="1">Atypical Angina</option>
+                            <option value="2">Non-anginal Pain</option>
+                            <option value="3">Asymptomatic</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Resting Blood Pressure</label>
+                        <input type="number"
+                               class="form-control"
+                               name="trestbps"
+                               required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Cholesterol</label>
+                        <input type="number"
+                               class="form-control"
+                               name="chol"
+                               required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Fasting Blood Sugar</label>
+
+                        <select class="form-select" name="fbs" required>
+                            <option value="0">Less than 120</option>
+                            <option value="1">120 or Above</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Rest ECG</label>
+
+                        <select class="form-select" name="restecg" required>
+                            <option value="0">Normal</option>
+                            <option value="1">Abnormal</option>
+                            <option value="2">Hypertrophy</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Maximum Heart Rate</label>
+                        <input type="number"
+                               class="form-control"
+                               name="thalach"
+                               required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Exercise Angina</label>
+
+                        <select class="form-select" name="exang" required>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Old Peak</label>
+                        <input type="number"
+                               step="0.1"
+                               class="form-control"
+                               name="oldpeak"
+                               required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Slope</label>
+
+                        <select class="form-select" name="slope" required>
+                            <option value="0">Upsloping</option>
+                            <option value="1">Flat</option>
+                            <option value="2">Downsloping</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Major Vessels</label>
+
+                        <select class="form-select" name="ca" required>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Thal</label>
+
+                        <select class="form-select" name="thal" required>
+                            <option value="1">Normal</option>
+                            <option value="2">Fixed Defect</option>
+                            <option value="3">Reversible Defect</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="btn btn-danger">
+                    Predict
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+    {% if prediction %}
+
+    <div class="card shadow">
+
+        <div class="card-header bg-success text-white">
+            <h4>Prediction Result</h4>
+        </div>
+
+        <div class="card-body">
+
+            <h5>
+                Patient :
+                {{ selected_patient.name }}
+            </h5>
+
+            <hr>
+
+            <p><strong>Prediction :</strong> {{ prediction }}</p>
+
+            <p><strong>Risk Probability :</strong> {{ probability }}%</p>
+
+            <p><strong>Recommendation :</strong></p>
+
+            <div class="alert alert-info">
+                {{ recommendation }}
+            </div>
+
+            <a href="{{ url_for('reports') }}"
+               class="btn btn-primary">
+                View Reports
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

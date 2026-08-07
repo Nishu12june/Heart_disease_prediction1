@@ -1,0 +1,156 @@
+body{
+    background:#f4f7fc;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+/* Sidebar */
+
+#sidebar{
+    width:240px;
+    min-height:100vh;
+    position:fixed;
+    background:#0d6efd;
+    color:#fff;
+    transition:.3s;
+}
+
+#sidebar.active{
+    margin-left:-240px;
+}
+
+#sidebar .components{
+    list-style:none;
+    padding:0;
+}
+
+#sidebar .components li{
+    padding:10px 20px;
+}
+
+#sidebar .components li a{
+    color:white;
+    text-decoration:none;
+    display:block;
+}
+
+#sidebar .components li:hover{
+    background:#0b5ed7;
+}
+
+#sidebar .active{
+    background:#084298;
+}
+
+/* Content */
+
+#content{
+    margin-left:240px;
+    padding:20px;
+    transition:.3s;
+}
+
+#content.active{
+    margin-left:0;
+}
+
+/* Cards */
+
+.card{
+    border:none;
+    border-radius:12px;
+}
+
+.card-header{
+    font-weight:bold;
+}
+
+/* Buttons */
+
+.btn{
+    border-radius:8px;
+}
+
+/* Tables */
+
+.table th{
+    background:#0d6efd;
+    color:white;
+    text-align:center;
+}
+
+.table td{
+    vertical-align:middle;
+}
+
+/* Avatar */
+
+.rounded-circle{
+    border:3px solid #0d6efd;
+}
+
+/* Footer */
+
+footer{
+    margin-top:40px;
+    color:#777;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+#sidebar{
+    margin-left:-240px;
+}
+
+#sidebar.active{
+    margin-left:0;
+}
+
+#content{
+    margin-left:0;
+}
+}
+/* ==========================================
+   THEME SETTINGS
+========================================== */
+
+body.light {
+    background: #f5f7fa;
+    color: #000;
+}
+
+body.dark {
+    background: #1e1e1e;
+    color: white;
+}
+
+body.dark .card {
+    background: #2b2b2b;
+    color: white;
+}
+
+body.dark .table {
+    color: white;
+}
+
+body.dark .navbar {
+    background: #111 !important;
+}
+
+body.dark .sidebar {
+    background: #222;
+}
+
+body.dark a {
+    color: white;
+}
+
+body.dark input,
+body.dark select,
+body.dark textarea {
+    background: #333;
+    color: white;
+    border: 1px solid #666;
+}
+
