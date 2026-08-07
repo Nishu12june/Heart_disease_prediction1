@@ -741,6 +741,7 @@ def delete_patient(patient_id):
     return redirect(url_for("reports"))
 
 
+
 # ==========================================================
 # RUN APPLICATION
 # ==========================================================
