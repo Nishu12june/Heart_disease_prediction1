@@ -5,221 +5,229 @@
 
 {% block content %}
 
-<div class="row justify-content-center">
+<div class="col-lg-8">
 
-    <div class="col-lg-8">
+    <div class="card shadow">
 
-        <div class="card shadow">
+        <div class="card-header bg-dark text-white">
 
-            <div class="card-header bg-dark text-white">
-
-                <h4>
-
-                    <i class="fa-solid fa-gear"></i>
-
-                    Settings
-
-                </h4>
-
-            </div>
-
-            <div class="card-body">
-
-                <form action="{{ url_for('save_settings_route') }}" method="POST">
-
-                    <!-- Theme -->
-
-                    <div class="mb-4">
-
-                        <label class="form-label">
-
-                            Theme
-
-                        </label>
-
-                        <select
-                            class="form-select"
-                            name="theme">
-
-                            <option value="light"
-                            {% if settings.theme=="light" %}selected{% endif %}>
-
-                                Light
-
-                            </option>
-
-                            <option value="dark"
-                            {% if settings.theme=="dark" %}selected{% endif %}>
-
-                                Dark
-
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                    <!-- Notifications -->
-
-                    <div class="form-check form-switch mb-4">
-
-                        <input
-                            class="form-check-input"
-                            type="checkbox"
-                            id="notifications"
-                            name="notifications"
-                            {% if settings.notifications %}checked{% endif %}>
-
-                        <label
-                            class="form-check-label"
-                            for="notifications">
-
-                            Enable Notifications
-
-                        </label>
-
-                    </div>
-
-                    <hr>
-
-                    <button
-                        type="submit"
-                        class="btn btn-success">
-
-                        <i class="fa-solid fa-floppy-disk"></i>
-
-                        Save Settings
-
-                    </button>
-
-                    <button
-                        type="reset"
-                        class="btn btn-secondary">
-
-                        Reset
-
-                    </button>
-
-                    <a
-                        href="{{ url_for('dashboard') }}"
-                        class="btn btn-danger">
-
-                        Back
-
-                    </a>
-
-                </form>
-
-            </div>
+            <h4>
+                <i class="fa-solid fa-gear"></i>
+                Settings
+            </h4>
 
         </div>
 
-        <!-- Information Card -->
+        <div class="card-body">
 
-        <div class="card shadow mt-4">
+            <form action="{{ url_for('save_settings_route') }}" method="POST">
 
-            <div class="card-header bg-primary text-white">
+                <!-- Theme -->
 
-                <h5>
+                <div class="mb-4">
 
-                    About This System
+                    <label class="form-label">
+                        Theme
+                    </label>
 
-                </h5>
+                    <select
+                        class="form-select"
+                        name="theme"
+                        id="themeSelect">
 
-            </div>
+                        <option
+                            value="light"
+                            {% if settings.theme == "light" %}selected{% endif %}>
+                            Light
+                        </option>
 
-            <div class="card-body">
+                        <option
+                            value="dark"
+                            {% if settings.theme == "dark" %}selected{% endif %}>
+                            Dark
+                        </option>
 
-                <table class="table table-bordered">
+                    </select>
 
-                    <tr>
+                </div>
 
-                        <th width="40%">
 
-                            Project
+                <!-- Notifications -->
 
-                        </th>
+                <div class="form-check form-switch mb-4">
 
-                        <td>
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="notifications"
+                        name="notifications"
+                        {% if settings.notifications %}checked{% endif %}>
 
-                            Heart Disease Prediction System
+                    <label
+                        class="form-check-label"
+                        for="notifications">
 
-                        </td>
+                        Enable Notifications
 
-                    </tr>
+                    </label>
 
-                    <tr>
+                </div>
 
-                        <th>
 
-                            Framework
+                <hr>
 
-                        </th>
 
-                        <td>
+                <button
+                    type="submit"
+                    class="btn btn-success">
 
-                            Flask
+                    <i class="fa-solid fa-floppy-disk"></i>
 
-                        </td>
+                    Save Settings
 
-                    </tr>
+                </button>
 
-                    <tr>
 
-                        <th>
+                <button
+                    type="reset"
+                    class="btn btn-secondary">
 
-                            Machine Learning
+                    Reset
 
-                        </th>
+                </button>
 
-                        <td>
 
-                            Scikit-learn
+                <a
+                    href="{{ url_for('dashboard') }}"
+                    class="btn btn-danger">
 
-                        </td>
+                    Back
 
-                    </tr>
+                </a>
 
-                    <tr>
+            </form>
 
-                        <th>
+        </div>
 
-                            Report
+    </div>
 
-                        </th>
 
-                        <td>
+    <!-- Information Card -->
 
-                            PDF Generator
+    <div class="card shadow mt-4">
 
-                        </td>
+        <div class="card-header bg-primary text-white">
 
-                    </tr>
+            <h5>
+                About This System
+            </h5>
 
-                    <tr>
+        </div>
 
-                        <th>
+        <div class="card-body">
 
-                            Charts
+            <table class="table table-bordered">
 
-                        </th>
+                <tr>
 
-                        <td>
+                    <th width="40%">
+                        Project
+                    </th>
 
-                            Matplotlib
+                    <td>
+                        Heart Disease Prediction System
+                    </td>
 
-                        </td>
+                </tr>
 
-                    </tr>
+                <tr>
 
-                </table>
+                    <th>
+                        Framework
+                    </th>
 
-            </div>
+                    <td>
+                        Flask
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+                        Machine Learning
+                    </th>
+
+                    <td>
+                        Scikit-learn
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+                        Report
+                    </th>
+
+                    <td>
+                        PDF Generator
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+                        Charts
+                    </th>
+
+                    <td>
+                        Matplotlib
+                    </td>
+
+                </tr>
+
+            </table>
 
         </div>
 
     </div>
 
 </div>
+
+
+<!-- =====================================================
+     Theme Preview / Apply
+===================================================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const themeSelect =
+        document.getElementById("themeSelect");
+
+    if (!themeSelect) {
+        return;
+    }
+
+    themeSelect.addEventListener("change", function () {
+
+        if (this.value === "dark") {
+
+            document.body.classList.add("dark-mode");
+
+        } else {
+
+            document.body.classList.remove("dark-mode");
+
+        }
+
+    });
+
+});
+
+</script>
 
 {% endblock %}
