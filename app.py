@@ -18,12 +18,15 @@ from datetime import datetime
 from generate_report import generate_pdf
 from chart_generator import generate_charts
 
+
 # ==========================================================
 # Flask App
 # ==========================================================
 
 app = Flask(__name__)
+
 app.secret_key = "heart_disease_secret_key"
+
 
 # ==========================================================
 # Folders
@@ -39,12 +42,14 @@ SETTINGS_FILE = os.path.join(DATA_FOLDER, "settings.json")
 os.makedirs(DATA_FOLDER, exist_ok=True)
 os.makedirs(REPORT_FOLDER, exist_ok=True)
 
+
 # ==========================================================
 # Load ML Model
 # ==========================================================
 
 model = joblib.load("heart_model.pkl")
 scaler = joblib.load("scaler.pkl")
+
 
 # ==========================================================
 # Create JSON Files (First Run)
@@ -53,6 +58,7 @@ scaler = joblib.load("scaler.pkl")
 if not os.path.exists(PATIENT_FILE):
     with open(PATIENT_FILE, "w") as f:
         json.dump([], f, indent=4)
+
 
 if not os.path.exists(PROFILE_FILE):
     with open(PROFILE_FILE, "w") as f:
@@ -68,6 +74,7 @@ if not os.path.exists(PROFILE_FILE):
             indent=4
         )
 
+
 if not os.path.exists(SETTINGS_FILE):
     with open(SETTINGS_FILE, "w") as f:
         json.dump(
@@ -79,36 +86,43 @@ if not os.path.exists(SETTINGS_FILE):
             indent=4
         )
 
+
 # ==========================================================
 # Helper Functions
 # ==========================================================
 
 def get_all_patients():
+
     with open(PATIENT_FILE, "r") as f:
         return json.load(f)
 
 
 def save_all_patients(patients):
+
     with open(PATIENT_FILE, "w") as f:
         json.dump(patients, f, indent=4)
 
 
 def load_profile():
+
     with open(PROFILE_FILE, "r") as f:
         return json.load(f)
 
 
 def save_profile(profile):
+
     with open(PROFILE_FILE, "w") as f:
         json.dump(profile, f, indent=4)
 
 
 def load_settings():
+
     with open(SETTINGS_FILE, "r") as f:
         return json.load(f)
 
 
 def save_settings(settings):
+
     with open(SETTINGS_FILE, "w") as f:
         json.dump(settings, f, indent=4)
 
@@ -118,15 +132,25 @@ def get_patient_by_id(patient_id):
     patients = get_all_patients()
 
     for patient in patients:
+
         if patient["id"] == patient_id:
             return patient
 
     return None
+
+
+# ==========================================================
+# SETTINGS CONTEXT
+# ==========================================================
+
 @app.context_processor
 def inject_settings():
+
     return {
         "settings": load_settings()
     }
+
+
 # ==========================================================
 # DASHBOARD
 # ==========================================================
@@ -140,22 +164,24 @@ def dashboard():
     total_patients = len(patients)
 
     total_predictions = sum(
-        1 for p in patients
+        1
+        for p in patients
         if p.get("prediction")
     )
 
     high_risk = sum(
-        1 for p in patients
+        1
+        for p in patients
         if p.get("prediction", {}).get("risk") == "High Risk"
     )
 
     low_risk = sum(
-        1 for p in patients
+        1
+        for p in patients
         if p.get("prediction", {}).get("risk") == "Low Risk"
     )
 
     return render_template(
-
         "dashboard.html",
 
         active_page="dashboard",
@@ -169,7 +195,6 @@ def dashboard():
         high_risk=high_risk,
 
         low_risk=low_risk
-
     )
 
 
@@ -184,7 +209,11 @@ def registration():
 
         patients = get_all_patients()
 
-        patient_id = patients[-1]["id"] + 1 if patients else 1
+        patient_id = (
+            patients[-1]["id"] + 1
+            if patients
+            else 1
+        )
 
         patient = {
 
@@ -204,30 +233,39 @@ def registration():
 
             "address": request.form["address"],
 
-            "emergency_contact": request.form["emergency_contact"],
+            "emergency_contact":
+                request.form["emergency_contact"],
 
-            "registered_on": datetime.now().strftime("%d-%m-%Y"),
+            "registered_on":
+                datetime.now().strftime("%d-%m-%Y"),
 
             "prediction": {}
-
         }
 
         patients.append(patient)
 
         save_all_patients(patients)
 
-        flash("Patient Registered Successfully!", "success")
+        flash(
+            "Patient Registered Successfully!",
+            "success"
+        )
 
-        return redirect(url_for("registration"))
+        return redirect(
+            url_for("registration")
+        )
 
     patients = get_all_patients()
 
-    patient_id = patients[-1]["id"] + 1 if patients else 1
+    patient_id = (
+        patients[-1]["id"] + 1
+        if patients
+        else 1
+    )
 
     today = datetime.now().strftime("%d-%m-%Y")
 
     return render_template(
-
         "registration.html",
 
         active_page="registration",
@@ -239,7 +277,6 @@ def registration():
         patient_id=patient_id,
 
         today=today
-
     )
 
 
@@ -253,7 +290,6 @@ def prediction():
     patients = get_all_patients()
 
     return render_template(
-
         "prediction.html",
 
         active_page="prediction",
@@ -261,8 +297,9 @@ def prediction():
         profile=load_profile(),
 
         patients=patients
-
     )
+
+
 # ==========================================================
 # PREDICT HEART DISEASE
 # ==========================================================
@@ -272,15 +309,22 @@ def predict():
 
     patients = get_all_patients()
 
-    patient_id = int(request.form["patient_id"])
+    patient_id = int(
+        request.form["patient_id"]
+    )
 
     patient = get_patient_by_id(patient_id)
 
     if patient is None:
 
-        flash("Patient not found!", "danger")
+        flash(
+            "Patient not found!",
+            "danger"
+        )
 
-        return redirect(url_for("prediction"))
+        return redirect(
+            url_for("prediction")
+        )
 
     # -------------------------
     # Patient Details
@@ -288,26 +332,61 @@ def predict():
 
     age = patient["age"]
 
-    sex = 1 if patient["gender"].lower() == "male" else 0
+    sex = (
+        1
+        if patient["gender"].lower() == "male"
+        else 0
+    )
 
     # -------------------------
     # Medical Parameters
     # -------------------------
 
     cp = int(request.form["cp"])
-    trestbps = int(request.form["trestbps"])
-    chol = int(request.form["chol"])
-    fbs = int(request.form["fbs"])
-    restecg = int(request.form["restecg"])
-    thalach = int(request.form["thalach"])
-    exang = int(request.form["exang"])
-    oldpeak = float(request.form["oldpeak"])
-    slope = int(request.form["slope"])
-    ca = int(request.form["ca"])
-    thal = int(request.form["thal"])
+
+    trestbps = int(
+        request.form["trestbps"]
+    )
+
+    chol = int(
+        request.form["chol"]
+    )
+
+    fbs = int(
+        request.form["fbs"]
+    )
+
+    restecg = int(
+        request.form["restecg"]
+    )
+
+    thalach = int(
+        request.form["thalach"]
+    )
+
+    exang = int(
+        request.form["exang"]
+    )
+
+    oldpeak = float(
+        request.form["oldpeak"]
+    )
+
+    slope = int(
+        request.form["slope"]
+    )
+
+    ca = int(
+        request.form["ca"]
+    )
+
+    thal = int(
+        request.form["thal"]
+    )
 
     # -------------------------
-    # Model Input (13 Features)
+    # Model Input
+    # 13 Features
     # -------------------------
 
     data = np.array([[
@@ -326,7 +405,15 @@ def predict():
         thal
     ]])
 
+    # -------------------------
+    # Scale Input
+    # -------------------------
+
     scaled = scaler.transform(data)
+
+    # -------------------------
+    # Prediction
+    # -------------------------
 
     prediction = model.predict(scaled)[0]
 
@@ -334,6 +421,10 @@ def predict():
         model.predict_proba(scaled)[0][1] * 100,
         2
     )
+
+    # -------------------------
+    # Risk and Recommendation
+    # -------------------------
 
     if prediction == 1:
 
@@ -350,12 +441,13 @@ def predict():
         risk = "Low Risk"
 
         recommendation = (
-            "Maintain a healthy lifestyle and continue regular exercise."
+            "Maintain a healthy lifestyle "
+            "and continue regular exercise."
         )
 
-    # -------------------------
+    # ======================================================
     # Save Prediction
-    # -------------------------
+    # ======================================================
 
     for p in patients:
 
@@ -367,37 +459,52 @@ def predict():
 
                 "probability": probability,
 
-                "prediction_date": datetime.now().strftime("%d-%m-%Y"),
+                "prediction_date":
+                    datetime.now().strftime(
+                        "%d-%m-%Y"
+                    ),
 
                 "parameters": {
 
                     "cp": cp,
+
                     "trestbps": trestbps,
+
                     "chol": chol,
+
                     "fbs": fbs,
+
                     "restecg": restecg,
+
                     "thalach": thalach,
+
                     "exang": exang,
+
                     "oldpeak": oldpeak,
+
                     "slope": slope,
+
                     "ca": ca,
+
                     "thal": thal
-
                 }
-
             }
 
             break
 
+    # Save patient data
     save_all_patients(patients)
 
-    # Generate chart for all patients
-    generate_charts(patients)
+    # IMPORTANT:
+    # Do NOT call generate_charts() here.
+    # Charts are generated from the Analytics page.
 
-    flash("Prediction Completed Successfully!", "success")
+    flash(
+        "Prediction Completed Successfully!",
+        "success"
+    )
 
     return render_template(
-
         "prediction.html",
 
         active_page="prediction",
@@ -413,7 +520,6 @@ def predict():
         recommendation=recommendation,
 
         selected_patient=patient
-
     )
 
 
@@ -427,7 +533,6 @@ def reports():
     patients = get_all_patients()
 
     return render_template(
-
         "reports.html",
 
         active_page="reports",
@@ -435,8 +540,9 @@ def reports():
         profile=load_profile(),
 
         patients=patients
-
     )
+
+
 # ==========================================================
 # RESULT PAGE
 # ==========================================================
@@ -448,12 +554,16 @@ def patient_report(patient_id):
 
     if patient is None:
 
-        flash("Patient not found!", "danger")
+        flash(
+            "Patient not found!",
+            "danger"
+        )
 
-        return redirect(url_for("reports"))
+        return redirect(
+            url_for("reports")
+        )
 
     return render_template(
-
         "result.html",
 
         active_page="reports",
@@ -461,7 +571,6 @@ def patient_report(patient_id):
         profile=load_profile(),
 
         patient=patient
-
     )
 
 
@@ -476,18 +585,20 @@ def download_report(patient_id):
 
     if patient is None:
 
-        flash("Patient not found!", "danger")
+        flash(
+            "Patient not found!",
+            "danger"
+        )
 
-        return redirect(url_for("reports"))
+        return redirect(
+            url_for("reports")
+        )
 
     pdf_path = generate_pdf(patient)
 
     return send_file(
-
         pdf_path,
-
         as_attachment=True
-
     )
 
 
@@ -502,56 +613,66 @@ def analytics():
 
     predicted_patients = [
 
-        p for p in patients
+        p
+        for p in patients
 
         if p.get("prediction")
-
     ]
 
     total_patients = len(patients)
 
-    total_predictions = len(predicted_patients)
+    total_predictions = len(
+        predicted_patients
+    )
 
     high_risk = sum(
 
-        1 for p in predicted_patients
+        1
+        for p in predicted_patients
 
-        if p["prediction"]["risk"] == "High Risk"
-
+        if p["prediction"]["risk"]
+        == "High Risk"
     )
 
     low_risk = sum(
 
-        1 for p in predicted_patients
+        1
+        for p in predicted_patients
 
-        if p["prediction"]["risk"] == "Low Risk"
-
+        if p["prediction"]["risk"]
+        == "Low Risk"
     )
+
+    # -------------------------
+    # Average Probability
+    # -------------------------
 
     if total_predictions > 0:
 
         average_probability = round(
 
             sum(
-
                 p["prediction"]["probability"]
-
                 for p in predicted_patients
-
-            ) / total_predictions,
+            )
+            / total_predictions,
 
             2
-
         )
 
     else:
 
         average_probability = 0
 
-    generate_charts(predicted_patients)
+    # -------------------------
+    # Generate Charts
+    # -------------------------
+
+    generate_charts(
+        predicted_patients
+    )
 
     return render_template(
-
         "analytics.html",
 
         active_page="analytics",
@@ -569,8 +690,9 @@ def analytics():
         low_risk=low_risk,
 
         average_probability=average_probability
-
     )
+
+
 # ==========================================================
 # PROFILE
 # ==========================================================
@@ -579,15 +701,17 @@ def analytics():
 def profile():
 
     return render_template(
-
         "profile.html",
 
         active_page="profile",
 
         profile=load_profile()
-
     )
 
+
+# ==========================================================
+# UPDATE PROFILE
+# ==========================================================
 
 @app.route("/update_profile", methods=["POST"])
 def update_profile():
@@ -603,14 +727,18 @@ def update_profile():
         "address": request.form["address"],
 
         "avatar": "avatar.png"
-
     }
 
     save_profile(profile)
 
-    flash("Profile Updated Successfully!", "success")
+    flash(
+        "Profile Updated Successfully!",
+        "success"
+    )
 
-    return redirect(url_for("profile"))
+    return redirect(
+        url_for("profile")
+    )
 
 
 # ==========================================================
@@ -621,7 +749,6 @@ def update_profile():
 def settings():
 
     return render_template(
-
         "settings.html",
 
         active_page="settings",
@@ -629,9 +756,12 @@ def settings():
         profile=load_profile(),
 
         settings=load_settings()
-
     )
 
+
+# ==========================================================
+# SAVE SETTINGS
+# ==========================================================
 
 @app.route("/save_settings", methods=["POST"])
 def save_settings_route():
@@ -640,15 +770,20 @@ def save_settings_route():
 
         "theme": request.form["theme"],
 
-        "notifications": "notifications" in request.form
-
+        "notifications":
+            "notifications" in request.form
     }
 
     save_settings(settings)
 
-    flash("Settings Saved Successfully!", "success")
+    flash(
+        "Settings Saved Successfully!",
+        "success"
+    )
 
-    return redirect(url_for("settings"))
+    return redirect(
+        url_for("settings")
+    )
 
 
 # ==========================================================
@@ -658,16 +793,22 @@ def save_settings_route():
 @app.route("/edit_patient/<int:patient_id>")
 def edit_patient(patient_id):
 
-    patient = get_patient_by_id(patient_id)
+    patient = get_patient_by_id(
+        patient_id
+    )
 
     if patient is None:
 
-        flash("Patient not found!", "danger")
+        flash(
+            "Patient not found!",
+            "danger"
+        )
 
-        return redirect(url_for("reports"))
+        return redirect(
+            url_for("reports")
+        )
 
     return render_template(
-
         "registration.html",
 
         active_page="registration",
@@ -679,7 +820,6 @@ def edit_patient(patient_id):
         patient_id=patient["id"],
 
         today=patient["registered_on"]
-
     )
 
 
@@ -687,7 +827,10 @@ def edit_patient(patient_id):
 # UPDATE PATIENT
 # ==========================================================
 
-@app.route("/update_patient/<int:patient_id>", methods=["POST"])
+@app.route(
+    "/update_patient/<int:patient_id>",
+    methods=["POST"]
+)
 def update_patient(patient_id):
 
     patients = get_all_patients()
@@ -697,28 +840,48 @@ def update_patient(patient_id):
         if patient["id"] == patient_id:
 
             patient["name"] = request.form["name"]
-            patient["age"] = int(request.form["age"])
+
+            patient["age"] = int(
+                request.form["age"]
+            )
+
             patient["gender"] = request.form["gender"]
-            patient["blood_group"] = request.form["blood_group"]
+
+            patient["blood_group"] = (
+                request.form["blood_group"]
+            )
+
             patient["phone"] = request.form["phone"]
+
             patient["email"] = request.form["email"]
+
             patient["address"] = request.form["address"]
-            patient["emergency_contact"] = request.form["emergency_contact"]
+
+            patient["emergency_contact"] = (
+                request.form["emergency_contact"]
+            )
 
             break
 
     save_all_patients(patients)
 
-    flash("Patient Updated Successfully!", "success")
+    flash(
+        "Patient Updated Successfully!",
+        "success"
+    )
 
-    return redirect(url_for("reports"))
+    return redirect(
+        url_for("reports")
+    )
 
 
 # ==========================================================
 # DELETE PATIENT
 # ==========================================================
 
-@app.route("/delete_patient/<int:patient_id>")
+@app.route(
+    "/delete_patient/<int:patient_id>"
+)
 def delete_patient(patient_id):
 
     patients = get_all_patients()
@@ -730,14 +893,18 @@ def delete_patient(patient_id):
         for patient in patients
 
         if patient["id"] != patient_id
-
     ]
 
     save_all_patients(patients)
 
-    flash("Patient Deleted Successfully!", "warning")
+    flash(
+        "Patient Deleted Successfully!",
+        "warning"
+    )
 
-    return redirect(url_for("reports"))
+    return redirect(
+        url_for("reports")
+    )
 
 
 # ==========================================================
@@ -751,4 +918,3 @@ if __name__ == "__main__":
         host="0.0.0.0",
         port=5000
     )
-    
