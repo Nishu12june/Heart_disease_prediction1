@@ -5,197 +5,179 @@
 
 {% block content %}
 
-<div class="col-lg-8">
+<div class="row justify-content-center">
+    <div class="col-lg-8">
 
-    <div class="card shadow">
+        <div class="card shadow">
 
-        <div class="card-header bg-dark text-white">
+            <div class="card-header bg-dark text-white">
 
-            <h4>
-                <i class="fa-solid fa-gear"></i>
-                Settings
-            </h4>
+                <h4>
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </h4>
 
-        </div>
+            </div>
 
-        <div class="card-body">
+            <div class="card-body">
 
-            <form action="{{ url_for('save_settings_route') }}" method="POST">
+                <form action="{{ url_for('save_settings_route') }}" method="POST">
 
-                <!-- Theme -->
+                    <!-- Theme -->
 
-                <div class="mb-4">
+                    <div class="mb-4">
 
-                    <label class="form-label">
-                        Theme
-                    </label>
+                        <label class="form-label">
+                            Theme
+                        </label>
 
-                    <select
-                        class="form-select"
-                        name="theme"
-                        id="themeSelect">
+                        <select class="form-select" name="theme" id="themeSelect">
 
-                        <option
-                            value="light"
-                            {% if settings.theme == "light" %}selected{% endif %}>
-                            Light
-                        </option>
+                            <option value="light" {% if settings.theme=="light" %}selected{% endif %}>
+                                Light
+                            </option>
 
-                        <option
-                            value="dark"
-                            {% if settings.theme == "dark" %}selected{% endif %}>
-                            Dark
-                        </option>
+                            <option value="dark" {% if settings.theme=="dark" %}selected{% endif %}>
+                                Dark
+                            </option>
 
-                    </select>
+                        </select>
 
-                </div>
+                    </div>
 
 
-                <!-- Notifications -->
+                    <!-- Notifications -->
 
-                <div class="form-check form-switch mb-4">
+                    <div class="form-check form-switch mb-4">
 
-                    <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="notifications"
-                        name="notifications"
-                        {% if settings.notifications %}checked{% endif %}>
+                        <input class="form-check-input" type="checkbox" id="notifications" name="notifications" {% if
+                            settings.notifications %}checked{% endif %}>
 
-                    <label
-                        class="form-check-label"
-                        for="notifications">
+                        <label class="form-check-label" for="notifications">
 
-                        Enable Notifications
+                            Enable Notifications
 
-                    </label>
+                        </label>
 
-                </div>
+                    </div>
 
 
-                <hr>
+                    <hr>
 
 
-                <button
-                    type="submit"
-                    class="btn btn-success">
+                    <button type="submit" class="btn btn-success">
 
-                    <i class="fa-solid fa-floppy-disk"></i>
+                        <i class="fa-solid fa-floppy-disk"></i>
 
-                    Save Settings
+                        Save Settings
 
-                </button>
+                    </button>
 
 
-                <button
-                    type="reset"
-                    class="btn btn-secondary">
+                    <button type="reset" class="btn btn-secondary">
 
-                    Reset
+                        Reset
 
-                </button>
+                    </button>
 
 
-                <a
-                    href="{{ url_for('dashboard') }}"
-                    class="btn btn-danger">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-danger">
 
-                    Back
+                        Back
 
-                </a>
+                    </a>
 
-            </form>
+                </form>
+
+            </div>
 
         </div>
 
-    </div>
 
+        <!-- Information Card -->
 
-    <!-- Information Card -->
+        <div class="card shadow mt-4">
 
-    <div class="card shadow mt-4">
+            <div class="card-header bg-primary text-white">
 
-        <div class="card-header bg-primary text-white">
+                <h5>
+                    About This System
+                </h5>
 
-            <h5>
-                About This System
-            </h5>
+            </div>
 
-        </div>
+            <div class="card-body">
 
-        <div class="card-body">
+                <table class="table table-bordered">
 
-            <table class="table table-bordered">
+                    <tr>
 
-                <tr>
+                        <th width="40%">
+                            Project
+                        </th>
 
-                    <th width="40%">
-                        Project
-                    </th>
+                        <td>
+                            Heart Disease Prediction System
+                        </td>
 
-                    <td>
-                        Heart Disease Prediction System
-                    </td>
+                    </tr>
 
-                </tr>
+                    <tr>
 
-                <tr>
+                        <th>
+                            Framework
+                        </th>
 
-                    <th>
-                        Framework
-                    </th>
+                        <td>
+                            Flask
+                        </td>
 
-                    <td>
-                        Flask
-                    </td>
+                    </tr>
 
-                </tr>
+                    <tr>
 
-                <tr>
+                        <th>
+                            Machine Learning
+                        </th>
 
-                    <th>
-                        Machine Learning
-                    </th>
+                        <td>
+                            Scikit-learn
+                        </td>
 
-                    <td>
-                        Scikit-learn
-                    </td>
+                    </tr>
 
-                </tr>
+                    <tr>
 
-                <tr>
+                        <th>
+                            Report
+                        </th>
 
-                    <th>
-                        Report
-                    </th>
+                        <td>
+                            PDF Generator
+                        </td>
 
-                    <td>
-                        PDF Generator
-                    </td>
+                    </tr>
 
-                </tr>
+                    <tr>
 
-                <tr>
+                        <th>
+                            Charts
+                        </th>
 
-                    <th>
-                        Charts
-                    </th>
+                        <td>
+                            Matplotlib
+                        </td>
 
-                    <td>
-                        Matplotlib
-                    </td>
+                    </tr>
 
-                </tr>
+                </table>
 
-            </table>
+            </div>
 
         </div>
 
     </div>
-
 </div>
-
 
 <!-- =====================================================
      Theme Preview / Apply
@@ -203,30 +185,30 @@
 
 <script>
 
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
 
-    const themeSelect =
-        document.getElementById("themeSelect");
+        const themeSelect =
+            document.getElementById("themeSelect");
 
-    if (!themeSelect) {
-        return;
-    }
-
-    themeSelect.addEventListener("change", function () {
-
-        if (this.value === "dark") {
-
-            document.body.classList.add("dark-mode");
-
-        } else {
-
-            document.body.classList.remove("dark-mode");
-
+        if (!themeSelect) {
+            return;
         }
 
-    });
+        themeSelect.addEventListener("change", function () {
 
-});
+            if (this.value === "dark") {
+
+                document.body.classList.add("dark-mode");
+
+            } else {
+
+                document.body.classList.remove("dark-mode");
+
+            }
+
+        });
+
+    });
 
 </script>
 
