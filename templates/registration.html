@@ -145,11 +145,14 @@
                     <label class="form-label">Phone</label>
 
                     <input
-                        type="text"
+                        type="tel"
                         name="phone"
                         class="form-control"
                         value="{{ patient.phone if patient else '' }}"
-                        required>
+                        pattern="[0-9]{10}"
+                        maxlength="10"
+                        minlength="10"
+                        inputmode="numeric">
 
                 </div>
 
@@ -172,10 +175,14 @@
                     <label class="form-label">Emergency Contact</label>
 
                     <input
-                        type="text"
+                        type="tel"
                         name="emergency_contact"
                         class="form-control"
-                        value="{{ patient.emergency_contact if patient else '' }}">
+                        value="{{ patient.emergency_contact if patient else '' }}"
+                        pattern="[0-9]{10}"
+                        maxlength="10"
+                        minlength="10"
+                        inputmode="numeric">
 
                 </div>
 
